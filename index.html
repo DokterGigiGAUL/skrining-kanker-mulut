@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skrining Kanker Mulut - Deteksi Dini</title>
+    <meta name="description" content="Aplikasi skrining deteksi dini lesi pre-kanker dan kanker mulut">
+    <link rel="manifest" href="#" />
+    <meta name="theme-color" content="#2563eb"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+            font-size: 40px;
+        }
+
+        h1 {
+            color: #1e293b;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 16px;
+        }
+
+        .user-type-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+
+        .user-type-btn {
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .user-type-btn:hover {
+            border-color: #667eea;
+            transform: translateY(-2px);
+        }
+
+        .user-type-btn.active {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .user-type-btn .icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .user-type-btn .label {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .question-section {
+            display: none;
+            animation: fadeIn 0.3s;
+        }
+
+        .question-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-group {
+            margin-bottom: 32px;
+        }
+
+        .question-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 16px;
+        }
+
+        .question-description {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+
+        .radio-group, .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option:hover {
+            border-color: #cbd5e1;
+            background: #f8fafc;
+        }
+
+        .option.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+
+        .option input {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+
+        .option label {
+            cursor: pointer;
+            flex: 1;
+            font-size: 15px;
+        }
+
+        .input-group {
+            margin-bottom: 24px;
+        }
+
+        .input-group label {
+            display: block;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .btn-secondary:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 12px;
+            margin-top: 32px;
+        }
+
+        .result-section {
+            display: none;
+        }
+
+        .result-section.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+
+        .risk-indicator {
+            padding: 24px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            text-align: center;
+        }
+
+        .risk-indicator.low {
+            background: #d1fae5;
+            border: 2px solid #10b981;
+        }
+
+        .risk-indicator.moderate {
+            background: #fef3c7;
+            border: 2px solid #f59e0b;
+        }
+
+        .risk-indicator.high {
+            background: #fee2e2;
+            border: 2px solid #ef4444;
+        }
+
+        .risk-level {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .risk-indicator.low .risk-level {
+            color: #059669;
+        }
+
+        .risk-indicator.moderate .risk-level {
+            color: #d97706;
+        }
+
+        .risk-indicator.high .risk-level {
+            color: #dc2626;
+        }
+
+        .recommendation {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .recommendation h3 {
+            color: #1e293b;
+            margin-bottom: 12px;
+            font-size: 18px;
+        }
+
+        .recommendation ul {
+            margin-left: 20px;
+        }
+
+        .recommendation li {
+            margin-bottom: 8px;
+            color: #475569;
+        }
+
+        .alert {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            color: #92400e;
+        }
+
+        .alert-info {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+            color: #1e40af;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+        }
+
+        .score-breakdown {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .score-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .score-item:last-child {
+            border-bottom: none;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 640px) {
+            .user-type-selector {
+                grid-template-columns: 1fr;
+            }
+            
+            .card {
+                padding: 24px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="header">
+                <div class="">
+                <img src="https://www.shutterstock.com/image-vector/dental-inspection-dentist-mirror-teeth-600nw-2679357339.jpg">
+                </div>
+                <h1>Skrining Kanker Mulut</h1>
+                <p class="subtitle">Deteksi Dini Lesi Pre-Kanker dan Kanker Mulut</p>
+            </div>
+
+            <!-- User Type Selection -->
+            <div id="userTypeSection">
+                <div class="alert alert-info">
+                    <strong>Penting:</strong> Aplikasi ini adalah alat skrining, bukan untuk diagnosis. Hasil harus dikonfirmasi oleh tenaga kesehatan profesional.
+                </div>
+                
+                <h2 style="margin-bottom: 16px; color: #1e293b;">Pilih Jenis Pengguna</h2>
+                <div class="user-type-selector">
+                    <div class="user-type-btn" onclick="selectUserType('public')">
+                        <div class="icon">👥</div>
+                        <div class="label">Masyarakat Umum</div>
+                    </div>
+                    <div class="user-type-btn" onclick="selectUserType('professional')">
+                        <div class="icon">⚕️</div>
+                        <div class="label">Dokter Gigi</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demographic Information -->
+            <div id="demographicSection" class="question-section">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 10%"></div>
+                </div>
+                
+                <h2 style="margin-bottom: 24px; color: #1e293b;">Informasi Dasar</h2>
+                
+                <div class="input-group">
+                    <label>Usia</label>
+                    <input type="number" id="age" min="1" max="120" placeholder="Masukkan usia">
+                </div>
+                
+                <div class="input-group">
+                    <label>Jenis Kelamin</label>
+                    <select id="gender">
+                        <option value="">Pilih jenis kelamin</option>
+                        <option value="male">Laki-laki</option>
+                        <option value="female">Perempuan</option>
+                    </select>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="goToUserType()">Kembali</button>
+                    <button class="btn btn-primary" onclick="startQuestionnaire()">Mulai Skrining</button>
+                </div>
+            </div>
+
+            <!-- Questionnaire Section -->
+            <div id="questionnaireSection" class="question-section">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="questionProgress" style="width: 30%"></div>
+                </div>
+                
+                <div id="questionContainer"></div>
+                
+                <div class="btn-group">
+                    <button class="btn btn-secondary" id="prevBtn" onclick="previousQuestion()">Sebelumnya</button>
+                    <button class="btn btn-primary" id="nextBtn" onclick="nextQuestion()">Selanjutnya</button>
+                </div>
+            </div>
+
+            <!-- Results Section -->
+            <div id="resultSection" class="result-section">
+                <h2 style="margin-bottom: 24px; color: #1e293b;">Hasil Skrining</h2>
+                
+                <div id="riskIndicator" class="risk-indicator">
+                    <div class="risk-level"></div>
+                    <div class="risk-description"></div>
+                </div>
+                
+                <div class="score-breakdown">
+                    <h3 style="margin-bottom: 16px; color: #1e293b;">Detail Penilaian</h3>
+                    <div id="scoreDetails"></div>
+                </div>
+                
+                <div id="recommendations"></div>
+                
+                <div class="alert alert-warning">
+                    <strong>Disclaimer:</strong> Hasil skrining ini bukan diagnosis medis. Konsultasikan dengan dokter gigi atau spesialis untuk pemeriksaan lebih lanjut.
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="restartScreening()">Skrining Baru</button>
+                    <button class="btn btn-primary" onclick="printResult()">Cetak Hasil</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Application state
+        let state = {
+            userType: null,
+            currentQuestion: 0,
+            answers: {},
+            score: 0
+        };
+
+        // Questions database based on oral cancer risk factors
+        const questions = {
+            public: [
+                {
+                    id: 'tobacco',
+                    title: 'Apakah Anda menggunakan produk tembakau?',
+                    description: 'Termasuk rokok, rokok kretek, cerutu, tembakau kunyah, atau sirih',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak pernah', weight: 0 },
+                        { value: 1, label: 'Pernah (sudah berhenti)', weight: 2 },
+                        { value: 2, label: 'Ya, kadang-kadang', weight: 4 },
+                        { value: 3, label: 'Ya, setiap hari', weight: 6 }
+                    ]
+                },
+                {
+                    id: 'tobacco_duration',
+                    title: 'Jika ya, berapa lama Anda menggunakan tembakau?',
+                    description: 'Durasi penggunaan meningkatkan risiko',
+                    type: 'radio',
+                    condition: (answers) => answers.tobacco > 0,
+                    options: [
+                        { value: 0, label: 'Kurang dari 5 tahun', weight: 1 },
+                        { value: 1, label: '5-10 tahun', weight: 2 },
+                        { value: 2, label: '10-20 tahun', weight: 3 },
+                        { value: 3, label: 'Lebih dari 20 tahun', weight: 5 }
+                    ]
+                },
+                {
+                    id: 'alcohol',
+                    title: 'Apakah Anda mengonsumsi minuman beralkohol?',
+                    description: 'Alkohol meningkatkan risiko kanker mulut',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak pernah', weight: 0 },
+                        { value: 1, label: 'Jarang (1-2x per bulan)', weight: 1 },
+                        { value: 2, label: 'Kadang (1-2x per minggu)', weight: 3 },
+                        { value: 3, label: 'Sering (hampir setiap hari)', weight: 5 }
+                    ]
+                },
+                {
+                    id: 'betel',
+                    title: 'Apakah Anda mengunyah sirih/pinang?',
+                    description: 'Kebiasaan menyirih adalah faktor risiko signifikan',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak pernah', weight: 0 },
+                        { value: 1, label: 'Pernah (sudah berhenti)', weight: 2 },
+                        { value: 2, label: 'Ya, kadang-kadang', weight: 4 },
+                        { value: 3, label: 'Ya, rutin setiap hari', weight: 6 }
+                    ]
+                },
+                {
+                    id: 'oral_lesion',
+                    title: 'Apakah ada luka/bercak di mulut yang tidak sembuh lebih dari 2 minggu?',
+                    description: 'Lesi yang persisten memerlukan evaluasi medis',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak ada', weight: 0 },
+                        { value: 1, label: 'Ada, sudah lebih dari 2 minggu', weight: 8 },
+                        { value: 2, label: 'Ada, sudah lebih dari 1 bulan', weight: 12 }
+                    ]
+                },
+                {
+                    id: 'white_red_patch',
+                    title: 'Apakah ada bercak putih atau merah di mulut Anda?',
+                    description: 'Leukoplakia (putih) atau eritroplakia (merah) bisa menjadi tanda pre-kanker',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak ada', weight: 0 },
+                        { value: 1, label: 'Ada bercak putih', weight: 6 },
+                        { value: 2, label: 'Ada bercak merah', weight: 8 },
+                        { value: 3, label: 'Ada bercak putih dan merah', weight: 10 }
+                    ]
+                },
+                {
+                    id: 'swelling',
+                    title: 'Apakah ada pembengkakan atau benjolan di mulut/leher?',
+                    description: 'Pembengkakan yang persisten perlu dievaluasi',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak ada', weight: 0 },
+                        { value: 1, label: 'Ada pembengkakan di mulut', weight: 7 },
+                        { value: 2, label: 'Ada benjolan di leher', weight: 7 },
+                        { value: 3, label: 'Ada keduanya', weight: 10 }
+                    ]
+                },
+                {
+                    id: 'pain',
+                    title: 'Apakah Anda merasakan nyeri persisten di mulut atau tenggorokan?',
+                    description: 'Nyeri yang tidak jelas penyebabnya dan tidak hilang',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak ada', weight: 0 },
+                        { value: 1, label: 'Kadang-kadang', weight: 3 },
+                        { value: 2, label: 'Sering terasa nyeri', weight: 6 }
+                    ]
+                },
+                {
+                    id: 'difficulty',
+                    title: 'Apakah Anda mengalami kesulitan menelan atau mengunyah?',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak ada kesulitan', weight: 0 },
+                        { value: 1, label: 'Kadang-kadang sulit', weight: 5 },
+                        { value: 2, label: 'Sering sulit menelan/mengunyah', weight: 8 }
+                    ]
+                },
+                {
+                    id: 'numbness',
+                    title: 'Apakah ada rasa kebas/mati rasa di mulut atau bibir?',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak ada', weight: 0 },
+                        { value: 1, label: 'Ya, kadang-kadang', weight: 4 },
+                        { value: 2, label: 'Ya, persisten', weight: 7 }
+                    ]
+                },
+                {
+                    id: 'dental_health',
+                    title: 'Bagaimana kondisi kesehatan gigi dan mulut Anda?',
+                    description: 'Kebersihan mulut yang buruk meningkatkan risiko',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Baik, rutin ke dokter gigi', weight: 0 },
+                        { value: 1, label: 'Cukup, jarang ke dokter gigi', weight: 2 },
+                        { value: 2, label: 'Buruk, banyak gigi rusak/hilang', weight: 4 }
+                    ]
+                },
+                {
+                    id: 'family_history',
+                    title: 'Apakah ada riwayat kanker mulut/kepala-leher dalam keluarga?',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak ada', weight: 0 },
+                        { value: 1, label: 'Ya, ada', weight: 3 }
+                    ]
+                },
+                {
+                    id: 'hpv',
+                    title: 'Apakah Anda pernah didiagnosis dengan infeksi HPV?',
+                    description: 'HPV tipe tertentu terkait dengan kanker orofaringeal',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak/Tidak tahu', weight: 0 },
+                        { value: 1, label: 'Ya', weight: 3 }
+                    ]
+                }
+            ],
+            professional: [
+                {
+                    id: 'tobacco',
+                    title: 'Riwayat penggunaan tembakau pasien',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak pernah', weight: 0 },
+                        { value: 1, label: 'Mantan perokok (>5 tahun berhenti)', weight: 2 },
+                        { value: 2, label: 'Mantan perokok (<5 tahun berhenti)', weight: 3 },
+                        { value: 3, label: 'Perokok aktif <10 tahun', weight: 5 },
+                        { value: 4, label: 'Perokok aktif >10 tahun', weight: 7 }
+                    ]
+                },
+                {
+                    id: 'alcohol',
+                    title: 'Konsumsi alkohol pasien',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak pernah', weight: 0 },
+                        { value: 1, label: 'Ringan (<1 drink/hari)', weight: 1 },
+                        { value: 2, label: 'Sedang (1-2 drinks/hari)', weight: 3 },
+                        { value: 3, label: 'Berat (>2 drinks/hari)', weight: 5 }
+                    ]
+                },
+                {
+                    id: 'betel',
+                    title: 'Kebiasaan menyirih/pinang',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak ada riwayat', weight: 0 },
+                        { value: 1, label: 'Mantan pengguna', weight: 2 },
+                        { value: 2, label: 'Pengguna aktif', weight: 6 }
+                    ]
+                },
+                {
+                    id: 'clinical_lesion',
+                    title: 'Temuan klinis lesi pada pemeriksaan',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak ada lesi mencurigakan', weight: 0 },
+                        { value: 1, label: 'Ulkus non-healing (>2 minggu)', weight: 10 },
+                        { value: 2, label: 'Leukoplakia homogen', weight: 6 },
+                        { value: 3, label: 'Leukoplakia non-homogen', weight: 8 },
+                        { value: 4, label: 'Eritroplakia', weight: 12 },
+                        { value: 5, label: 'Lesi eritroleukoplakia', weight: 14 }
+                    ]
+                },
+                {
+                    id: 'lesion_location',
+                    title: 'Lokasi lesi (jika ada)',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak ada lesi', weight: 0 },
+                        { value: 1, label: 'Mukosa bukal/bibir', weight: 2 },
+                        { value: 2, label: 'Lidah lateral/ventral', weight: 4 },
+                        { value: 3, label: 'Dasar mulut', weight: 5 },
+                        { value: 4, label: 'Soft palate/orofaring', weight: 4 }
+                    ]
+                },
+                {
+                    id: 'lesion_character',
+                    title: 'Karakteristik lesi',
+                    type: 'checkbox',
+                    options: [
+                        { value: 'induration', label: 'Indurasi', weight: 5 },
+                        { value: 'irregular', label: 'Tepi irregular', weight: 4 },
+                        { value: 'bleeding', label: 'Mudah berdarah', weight: 5 },
+                        { value: 'fixation', label: 'Fiksasi pada jaringan dalam', weight: 6 },
+                        { value: 'ulceration', label: 'Ulserasi', weight: 4 }
+                    ]
+                },
+                {
+                    id: 'lymph_nodes',
+                    title: 'Pemeriksaan kelenjar getah bening',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak teraba', weight: 0 },
+                        { value: 1, label: 'Limfadenopati mobile', weight: 5 },
+                        { value: 2, label: 'Limfadenopati fixed/matted', weight: 10 }
+                    ]
+                },
+                {
+                    id: 'size',
+                    title: 'Ukuran lesi (jika ada)',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak ada lesi', weight: 0 },
+                        { value: 1, label: '<1 cm', weight: 2 },
+                        { value: 2, label: '1-2 cm', weight: 4 },
+                        { value: 3, label: '>2 cm', weight: 6 }
+                    ]
+                },
+                {
+                    id: 'symptoms',
+                    title: 'Gejala yang dilaporkan pasien',
+                    type: 'checkbox',
+                    options: [
+                        { value: 'pain', label: 'Nyeri persisten', weight: 3 },
+                        { value: 'dysphagia', label: 'Disfagia', weight: 5 },
+                        { value: 'numbness', label: 'Parestesia/kebas', weight: 4 },
+                        { value: 'bleeding', label: 'Perdarahan spontan', weight: 5 },
+                        { value: 'loose_teeth', label: 'Gigi goyang tanpa sebab', weight: 4 }
+                    ]
+                },
+                {
+                    id: 'immunocompromised',
+                    title: 'Status imunokompromais',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak ada', weight: 0 },
+                        { value: 1, label: 'HIV/AIDS atau imunosupresi', weight: 3 }
+                    ]
+                },
+                {
+                    id: 'previous_cancer',
+                    title: 'Riwayat kanker sebelumnya',
+                    type: 'radio',
+                    options: [
+                        { value: 0, label: 'Tidak ada', weight: 0 },
+                        { value: 1, label: 'Kanker mulut/kepala-leher sebelumnya', weight: 5 },
+                        { value: 2, label: 'Kanker jenis lain', weight: 2 }
+                    ]
+                }
+            ]
+        };
+
+        function selectUserType(type) {
+            state.userType = type;
+            document.querySelectorAll('.user-type-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.user-type-btn').classList.add('active');
+            
+            setTimeout(() => {
+                document.getElementById('userTypeSection').style.display = 'none';
+                document.getElementById('demographicSection').classList.add('active');
+            }, 300);
+        }
+
+        function goToUserType() {
+            document.getElementById('demographicSection').classList.remove('active');
+            document.getElementById('userTypeSection').style.display = 'block';
+        }
+
+        function startQuestionnaire() {
+            const age = document.getElementById('age').value;
+            const gender = document.getElementById('gender').value;
+            
+            if (!age || !gender) {
+                alert('Mohon lengkapi informasi dasar');
+                return;
+            }
+            
+            state.answers.age = parseInt(age);
+            state.answers.gender = gender;
+            
+            // Age is a risk factor for oral cancer (>40 years)
+            if (state.answers.age > 40) {
+                state.score += 2;
+            }
+            if (state.answers.age > 60) {
+                state.score += 2;
+            }
+            
+            // Male gender has higher risk
+            if (state.answers.gender === 'male') {
+                state.score += 1;
+            }
+            
+            document.getElementById('demographicSection').classList.remove('active');
+            document.getElementById('questionnaireSection').classList.add('active');
+            
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            const currentQuestions = questions[state.userType];
+            let questionIndex = state.currentQuestion;
+            
+            // Skip questions based on conditions
+            while (questionIndex < currentQuestions.length) {
+                const question = currentQuestions[questionIndex];
+                if (!question.condition || question.condition(state.answers)) {
+                    break;
+                }
+                questionIndex++;
+            }
+            
+            if (questionIndex >= currentQuestions.length) {
+                showResults();
+                return;
+            }
+            
+            state.currentQuestion = questionIndex;
+            const question = currentQuestions[questionIndex];
+            
+            const progress = ((questionIndex + 1) / currentQuestions.length) * 70 + 30;
+            document.getElementById('questionProgress').style.width = progress + '%';
+            
+            let html = `
+                <div class="question-group">
+                    <div class="question-title">${question.title}</div>
+                    ${question.description ? `<div class="question-description">${question.description}</div>` : ''}
+            `;
+            
+            if (question.type === 'radio') {
+                html += '<div class="radio-group">';
+                question.options.forEach((option, idx) => {
+                    const checked = state.answers[question.id] === option.value ? 'checked' : '';
+                    const selected = checked ? 'selected' : '';
+                    html += `
+                        <div class="option ${selected}" onclick="selectOption('${question.id}', ${option.value}, ${option.weight}, this)">
+                            <input type="radio" name="${question.id}" value="${option.value}" ${checked}>
+                            <label>${option.label}</label>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            } else if (question.type === 'checkbox') {
+                html += '<div class="checkbox-group">';
+                question.options.forEach((option, idx) => {
+                    const answers = state.answers[question.id] || [];
+                    const checked = answers.includes(option.value) ? 'checked' : '';
+                    const selected = checked ? 'selected' : '';
+                    html += `
+                        <div class="option ${selected}" onclick="toggleCheckbox('${question.id}', '${option.value}', ${option.weight}, this)">
+                            <input type="checkbox" value="${option.value}" ${checked}>
+                            <label>${option.label}</label>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+            }
+            
+            html += '</div>';
+            
+            document.getElementById('questionContainer').innerHTML = html;
+            
+            // Update button states
+            document.getElementById('prevBtn').disabled = questionIndex === 0;
+            document.getElementById('nextBtn').textContent = 
+                questionIndex === currentQuestions.length - 1 ? 'Lihat Hasil' : 'Selanjutnya';
+        }
+
+        function selectOption(questionId, value, weight, element) {
+            // Remove previous weight if answer exists
+            const currentQuestions = questions[state.userType];
+            const question = currentQuestions.find(q => q.id === questionId);
+            
+            if (state.answers[questionId] !== undefined) {
+                const oldOption = question.options.find(o => o.value === state.answers[questionId]);
+                if (oldOption) {
+                    state.score -= oldOption.weight;
+                }
+            }
+            
+            state.answers[questionId] = value;
+            state.score += weight;
+            
+            // Update UI
+            element.parentElement.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+            element.querySelector('input').checked = true;
+        }
+
+        function toggleCheckbox(questionId, value, weight, element) {
+            if (!state.answers[questionId]) {
+                state.answers[questionId] = [];
+            }
+            
+            const index = state.answers[questionId].indexOf(value);
+            const checkbox = element.querySelector('input');
+            
+            if (index > -1) {
+                state.answers[questionId].splice(index, 1);
+                state.score -= weight;
+                element.classList.remove('selected');
+                checkbox.checked = false;
+            } else {
+                state.answers[questionId].push(value);
+                state.score += weight;
+                element.classList.add('selected');
+                checkbox.checked = true;
+            }
+        }
+
+        function nextQuestion() {
+            const currentQuestions = questions[state.userType];
+            const question = currentQuestions[state.currentQuestion];
+            
+            // Validate answer
+            if (!state.answers.hasOwnProperty(question.id) || 
+                (Array.isArray(state.answers[question.id]) && state.answers[question.id].length === 0)) {
+                alert('Mohon jawab pertanyaan ini sebelum melanjutkan');
+                return;
+            }
+            
+            state.currentQuestion++;
+            
+            // Skip conditional questions
+            while (state.currentQuestion < currentQuestions.length) {
+                const nextQ = currentQuestions[state.currentQuestion];
+                if (!nextQ.condition || nextQ.condition(state.answers)) {
+                    break;
+                }
+                state.currentQuestion++;
+            }
+            
+            if (state.currentQuestion >= currentQuestions.length) {
+                showResults();
+            } else {
+                renderQuestion();
+            }
+        }
+
+        function previousQuestion() {
+            if (state.currentQuestion > 0) {
+                state.currentQuestion--;
+                
+                // Skip conditional questions when going back
+                const currentQuestions = questions[state.userType];
+                while (state.currentQuestion >= 0) {
+                    const prevQ = currentQuestions[state.currentQuestion];
+                    if (!prevQ.condition || prevQ.condition(state.answers)) {
+                        break;
+                    }
+                    state.currentQuestion--;
+                }
+                
+                if (state.currentQuestion >= 0) {
+                    renderQuestion();
+                }
+            }
+        }
+
+        function showResults() {
+            document.getElementById('questionnaireSection').classList.remove('active');
+            document.getElementById('resultSection').classList.add('active');
+            
+            // Calculate risk level based on score
+            let riskLevel, riskClass, riskDescription;
+            
+            if (state.userType === 'public') {
+                if (state.score < 10) {
+                    riskLevel = 'Risiko Rendah';
+                    riskClass = 'low';
+                    riskDescription = 'Anda memiliki risiko rendah untuk lesi pre-kanker atau kanker mulut';
+                } else if (state.score < 25) {
+                    riskLevel = 'Risiko Sedang';
+                    riskClass = 'moderate';
+                    riskDescription = 'Anda memiliki beberapa faktor risiko yang perlu diperhatikan';
+                } else {
+                    riskLevel = 'Risiko Tinggi';
+                    riskClass = 'high';
+                    riskDescription = 'Anda memiliki risiko tinggi dan memerlukan evaluasi medis segera';
+                }
+            } else {
+                if (state.score < 15) {
+                    riskLevel = 'Risiko Rendah';
+                    riskClass = 'low';
+                    riskDescription = 'Pasien memiliki risiko rendah berdasarkan temuan klinis';
+                } else if (state.score < 35) {
+                    riskLevel = 'Risiko Sedang';
+                    riskClass = 'moderate';
+                    riskDescription = 'Pasien memerlukan monitoring dan follow-up berkala';
+                } else {
+                    riskLevel = 'Risiko Tinggi';
+                    riskClass = 'high';
+                    riskDescription = 'Rujukan ke spesialis dan biopsi sangat direkomendasikan';
+                }
+            }
+            
+            const indicator = document.getElementById('riskIndicator');
+            indicator.className = `risk-indicator ${riskClass}`;
+            indicator.querySelector('.risk-level').textContent = riskLevel;
+            indicator.querySelector('.risk-description').textContent = riskDescription;
+            
+            // Score breakdown
+            let scoreHTML = `
+                <div class="score-item">
+                    <span>Skor Total</span>
+                    <strong>${state.score}</strong>
+                </div>
+                <div class="score-item">
+                    <span>Usia</span>
+                    <span>${state.answers.age} tahun</span>
+                </div>
+                <div class="score-item">
+                    <span>Jenis Kelamin</span>
+                    <span>${state.answers.gender === 'male' ? 'Laki-laki' : 'Perempuan'}</span>
+                </div>
+            `;
+            document.getElementById('scoreDetails').innerHTML = scoreHTML;
+            
+            // Recommendations
+            let recommendations = generateRecommendations(riskClass);
+            document.getElementById('recommendations').innerHTML = recommendations;
+        }
+
+        function generateRecommendations(riskClass) {
+            let html = '';
+            
+            if (state.userType === 'public') {
+                if (riskClass === 'low') {
+                    html = `
+                        <div class="recommendation">
+                            <h3>✓ Rekomendasi</h3>
+                            <ul>
+                                <li>Lanjutkan kebiasaan baik menjaga kesehatan mulut</li>
+                                <li>Periksakan gigi ke dokter gigi minimal 6 bulan sekali</li>
+                                <li>Hindari faktor risiko seperti tembakau dan alkohol</li>
+                                <li>Konsumsi makanan sehat kaya sayur dan buah</li>
+                                <li>Lakukan pemeriksaan mandiri mulut secara berkala</li>
+                            </ul>
+                        </div>
+                    `;
+                } else if (riskClass === 'moderate') {
+                    html = `
+                        <div class="recommendation">
+                            <h3>⚠️ Rekomendasi</h3>
+                            <ul>
+                                <li><strong>Konsultasikan dengan dokter gigi dalam 1-2 minggu</strong></li>
+                                <li>Hentikan kebiasaan merokok/tembakau jika ada</li>
+                                <li>Kurangi atau hentikan konsumsi alkohol</li>
+                                <li>Jaga kebersihan mulut dengan menyikat gigi 2x sehari</li>
+                                <li>Perhatikan perubahan di mulut dan laporkan ke dokter</li>
+                                <li>Lakukan skrining rutin setiap 3-6 bulan</li>
+                            </ul>
+                        </div>
+                    `;
+                } else {
+                    html = `
+                        <div class="recommendation">
+                            <h3>🚨 Rekomendasi Mendesak</h3>
+                            <ul>
+                                <li><strong>SEGERA konsultasi ke dokter gigi/spesialis dalam 1-3 hari</strong></li>
+                                <li>Bawa hasil skrining ini saat konsultasi</li>
+                                <li>Mungkin diperlukan pemeriksaan lanjutan (biopsi)</li>
+                                <li>Hentikan SEGERA penggunaan tembakau dan alkohol</li>
+                                <li>Jangan tunda pemeriksaan medis</li>
+                            </ul>
+                        </div>
+                        <div class="alert alert-warning">
+                            <strong>Penting!</strong> Deteksi dini sangat meningkatkan peluang kesembuhan. Kanker mulut stadium awal memiliki tingkat kesembuhan >80%.
+                        </div>
+                    `;
+                }
+            } else {
+                // Professional recommendations
+                if (riskClass === 'low') {
+                    html = `
+                        <div class="recommendation">
+                            <h3>Tindakan Klinis</h3>
+                            <ul>
+                                <li>Skrining ulang dalam 6-12 bulan</li>
+                                <li>Edukasi pasien tentang faktor risiko</li>
+                                <li>Dokumentasikan temuan klinis</li>
+                                <li>Berikan konseling cessation jika ada paparan tembakau/alkohol</li>
+                            </ul>
+                        </div>
+                    `;
+                } else if (riskClass === 'moderate') {
+                    html = `
+                        <div class="recommendation">
+                            <h3>Tindakan Klinis</h3>
+                            <ul>
+                                <li><strong>Follow-up dalam 1-3 bulan</strong></li>
+                                <li>Pertimbangkan foto klinis untuk monitoring</li>
+                                <li>Brush biopsy atau toluidine blue test jika tersedia</li>
+                                <li>Rujuk ke spesialis jika lesi progresif</li>
+                                <li>Edukasi intensif tentang modifikasi faktor risiko</li>
+                                <li>Dokumentasi detail lokasi, ukuran, dan karakteristik lesi</li>
+                            </ul>
+                        </div>
+                    `;
+                } else {
+                    html = `
+                        <div class="recommendation">
+                            <h3>Tindakan Klinis Mendesak</h3>
+                            <ul>
+                                <li><strong>RUJUKAN SEGERA ke Spesialis Bedah Mulut/Onkologi</strong></li>
+                                <li>Biopsi incisional/excisional DIREKOMENDASIKAN</li>
+                                <li>Pemeriksaan imaging (CT/MRI) jika ada indikasi</li>
+                                <li>Follow-up maksimal 1-2 minggu</li>
+                                <li>Dokumentasi lengkap dengan foto klinis</li>
+                                <li>Informasikan pasien tentang urgency tanpa menimbulkan kepanikan berlebih</li>
+                            </ul>
+                        </div>
+                        <div class="alert alert-warning">
+                            <strong>Catatan:</strong> Temuan klinis menunjukkan indikasi kuat untuk evaluasi lebih lanjut. Early detection significantly improves prognosis.
+                        </div>
+                    `;
+                }
+            }
+            
+            return html;
+        }
+
+        function restartScreening() {
+            state = {
+                userType: null,
+                currentQuestion: 0,
+                answers: {},
+                score: 0
+            };
+            
+            document.getElementById('age').value = '';
+            document.getElementById('gender').value = '';
+            
+            document.getElementById('resultSection').classList.remove('active');
+            document.getElementById('userTypeSection').style.display = 'block';
+            
+            document.querySelectorAll('.user-type-btn').forEach(btn => btn.classList.remove('active'));
+        }
+
+        function printResult() {
+            window.print();
+        }
+
+        // Install PWA support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {
+                    // Service worker registration failed - this is okay for development
+                });
+            });
+        }
+    </script>
+</body>
+</html>
