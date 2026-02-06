@@ -420,7 +420,7 @@
                     title: 'Jika ya, berapa lama Anda menggunakan tembakau?',
                     description: 'Termasuk jika pernah menggunakan',
                     type: 'radio',
-                    condition: (answers) => answers.tobacco > 3,
+                    condition: (answers) => answers.tobacco < 3,
                     options: [
                         { value: 0, label: 'Lebih dari 20 tahun', weight: 5 },
                         { value: 1, label: '10-20 tahun', weight: 3 },
@@ -454,8 +454,8 @@
                 },
                 {
                     id: 'oral_lesion',
-                    title: 'Apakah ada luka/bercak di mulut yang tidak sembuh lebih dari 2 minggu?',
-                    description: 'Lesi yang persisten memerlukan evaluasi medis',
+                    title: 'Apakah ada luka/bercak di mulut yang tidak sembuh selama 2 minggu atau lebih?',
+                    description: 'Lesi yang tidak merespon terapi dari tenaga medis (dokter/ dokter gigi)',
                     type: 'radio',
                     options: [
                         { value: 0, label: 'Tidak ada', weight: 0 },
@@ -708,7 +708,7 @@
                 state.score += 2;
             }
             if (state.answers.age > 60) {
-                state.score += 2;
+                state.score += 3;
             }
             
             // Male gender has higher risk
@@ -897,7 +897,7 @@
                 } else if (state.score < 25) {
                     riskLevel = 'Risiko Sedang';
                     riskClass = 'moderate';
-                    riskDescription = 'Anda memiliki beberapa faktor risiko yang perlu mendapa perhatian';
+                    riskDescription = 'Anda memiliki beberapa faktor risiko yang perlu mendapat perhatian';
                 } else {
                     riskLevel = 'Risiko Tinggi';
                     riskClass = 'high';
