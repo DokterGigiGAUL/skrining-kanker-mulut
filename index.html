@@ -295,18 +295,17 @@
             <!-- <div class="w-80 h-80 bg-white border-xl flex align-center justify-center mx-4 text-3xl"-->
             <div class="rounded-t-2xl bg-white pt-4">
                 <img src="https://live.staticflickr.com/65535/55080957875_2e6dbc2931_b.jpg">
-                </div>
-                <div class="rounded-b-2xl p-4 mb-4 bg-white">
+            </div>
+            <div class="rounded-b-2xl p-4 mb-4 bg-white">
                 <h1 class="text-center font-bold text-xl pb-1">OCRE- Oral Cancer Risk Evaluator</h1>
                 <p class="text-center text-base">Evaluasi dan Deteksi Dini Kanker Mulut</p>
                 <div class="bg-yellow-100 p-2 text-black mt-4 text-sm">
-                <em>Penting:</em> Aplikasi ini adalah alat skrining, bukan untuk diagnosis. Hasil akhir harus dikonsultasikan dengan dokter gigi spesialis penyakit mulut.
+                  <em>Penting:</em> Aplikasi ini adalah alat skrining, bukan untuk diagnosis. Hasil akhir harus dikonsultasikan dengan dokter gigi spesialis penyakit mulut.
                 </div>
-
+            </div>
        
             <!-- User Type Selection -->
             <div id="userTypeSection">
-                
                 <h2 class="my-4 text-color-black pt-4 border-t border-gray-400/60";">Pilih Tipe Pengguna</h2>
                 <div class="space-y-3">
                     <div class="user-type-btn text-white rounded-xl text-center p-3 bg-sky-800 align-top" onclick="selectUserType('public')">
@@ -317,7 +316,7 @@
                     </div>
                 </div>
             </div>
-                        </div>
+        </div>
 
             <!-- Demographic Information -->
             <div id="demographicSection" class="question-section">
@@ -421,7 +420,7 @@
                     title: 'Jika ya, berapa lama Anda menggunakan tembakau?',
                     description: 'Termasuk jika pernah menggunakan',
                     type: 'radio',
-                    condition: (answers) => answers.tobacco > 0,
+                    condition: (answers) => answers.tobacco > 3,
                     options: [
                         { value: 0, label: 'Lebih dari 20 tahun', weight: 5 },
                         { value: 1, label: '10-20 tahun', weight: 3 },
@@ -432,13 +431,13 @@
                 {
                     id: 'alcohol',
                     title: 'Apakah Anda mengonsumsi minuman beralkohol?',
-                    description: 'Alkohol meningkatkan risiko kanker mulut',
+                    description: 'Jumlah konsumsi dalam satuan gelas',
                     type: 'radio',
                     options: [
-                        { value: 0, label: 'Tidak pernah', weight: 0 },
-                        { value: 1, label: 'Jarang (1-2x per bulan)', weight: 1 },
-                        { value: 2, label: 'Kadang (1-2x per minggu)', weight: 3 },
-                        { value: 3, label: 'Sering (hampir setiap hari)', weight: 5 }
+                        { value: 0, label: 'Sering (hampir setiap hari)', weight: 5 },
+                        { value: 1, label: 'Kadang (1-2x per minggu)', weight: 3 },
+                        { value: 2, label: 'Jarang (1-2x per bulan)', weight: 1 },
+                        { value: 3, label: 'Tidak pernah', weight: 0 }
                     ]
                 },
                 {
@@ -898,7 +897,7 @@
                 } else if (state.score < 25) {
                     riskLevel = 'Risiko Sedang';
                     riskClass = 'moderate';
-                    riskDescription = 'Anda memiliki beberapa faktor risiko yang perlu diperhatikan';
+                    riskDescription = 'Anda memiliki beberapa faktor risiko yang perlu mendapa perhatian';
                 } else {
                     riskLevel = 'Risiko Tinggi';
                     riskClass = 'high';
@@ -908,7 +907,7 @@
                 if (state.score < 15) {
                     riskLevel = 'Risiko Rendah';
                     riskClass = 'low';
-                    riskDescription = 'Pasien memiliki risiko rendah berdasarkan temuan klinis';
+                    riskDescription = 'Pasien memiliki risiko rendah berdasarkan evaluasi';
                 } else if (state.score < 35) {
                     riskLevel = 'Risiko Sedang';
                     riskClass = 'moderate';
@@ -956,11 +955,11 @@
                         <div class="recommendation">
                             <h3>✓ Rekomendasi</h3>
                             <ul>
-                                <li>Lanjutkan kebiasaan baik menjaga kesehatan mulut</li>
-                                <li>Periksakan gigi ke dokter gigi minimal 6 bulan sekali</li>
                                 <li>Hindari faktor risiko seperti tembakau dan alkohol</li>
-                                <li>Konsumsi makanan sehat kaya sayur dan buah</li>
-                                <li>Lakukan pemeriksaan mandiri mulut secara berkala</li>
+                                <li>Konsumsi makanan sehat dan berserat seperti sayur dan buah</li>
+                                <li>Lanjutkan kebiasaan baik menjaga kesehatan mulut</li>
+                                <li>Periksakan gigi ke dokter gigi spesialis penyakit mulut minimal 6 bulan sekali</li>
+                                <li>Lakukan pemeriksaan mandiri ulang berkala 3 bulan sekali</li>
                             </ul>
                         </div>
                     `;
@@ -970,28 +969,27 @@
                             <h3>⚠️ Rekomendasi</h3>
                             <ul>
                                 <li><strong>Konsultasikan dengan dokter gigi dalam 1-2 minggu</strong></li>
-                                <li>Hentikan kebiasaan merokok/tembakau jika ada</li>
-                                <li>Kurangi atau hentikan konsumsi alkohol</li>
+                                <li>Hentikan atau coba kurangi kebiasaan merokok/tembakau jika ada</li>
+                                <li>Kurangi atau hentikan konsumsi alkohol jika ada </li>
                                 <li>Jaga kebersihan mulut dengan menyikat gigi 2x sehari</li>
                                 <li>Perhatikan perubahan di mulut dan laporkan ke dokter</li>
-                                <li>Lakukan skrining rutin setiap 3-6 bulan</li>
+                                <li>Lakukan skrining rutin ke dokter gigi spesialis penyakit mulut setiap 3-6 bulan</li>
                             </ul>
                         </div>
                     `;
                 } else {
                     html = `
                         <div class="recommendation">
-                            <h3>🚨 Rekomendasi Mendesak</h3>
+                            <h3>🚨 Rekomendasi </h3>
                             <ul>
-                                <li><strong>SEGERA konsultasi ke dokter gigi/spesialis dalam 1-3 hari</strong></li>
+                                <li><strong>SEGERA konsultasi ke dokter gigi/spesialis penyakit mulut dalam 1-3 hari</strong></li>
                                 <li>Bawa hasil skrining ini saat konsultasi</li>
-                                <li>Mungkin diperlukan pemeriksaan lanjutan (biopsi)</li>
                                 <li>Hentikan SEGERA penggunaan tembakau dan alkohol</li>
-                                <li>Jangan tunda pemeriksaan medis</li>
+                                <li>Jangan tunda pemeriksaan medis, termasuk saran biopsi jika diperlukan</li>
                             </ul>
                         </div>
                         <div class="alert alert-warning">
-                            <strong>Penting!</strong> Deteksi dini sangat meningkatkan peluang kesembuhan. Kanker mulut stadium awal memiliki tingkat kesembuhan >80%.
+                            <strong>Penting!</strong> Deteksi dan tatalaksana dini sangat meningkatkan peluang kesembuhan. Kanker mulut di stadium awal memiliki tingkat kesembuhan >80%.
                         </div>
                     `;
                 }
