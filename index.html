@@ -386,19 +386,19 @@
 
             <!-- Questionnaire Section -->
             <div id="questionnaireSection" class="question-section">
-              <div class="rounded-3xl bg-white p-4">
-                <div class="w-100% h-3 bg-gray-200 rounded-full mb-6 overflow-hidden">
-                    <div class="h-full transition-width duration-0.3s bg-sky-800" id="questionProgress" style="width: 30%"></div>
-                </div>
+                <div class="rounded-3xl bg-white p-4">
+                    <div class="w-100% h-3 bg-gray-200 rounded-full mb-6 overflow-hidden">
+                        <div class="h-full transition-width duration-0.3s bg-sky-800" id="questionProgress" style="width: 30%"></div>
+                    </div>
                 
-                <div id="questionContainer"></div>
+                    <div id="questionContainer"></div>
                 
-                <div class="flex flex-row gap-4">
-                    <button class="rounded-xl bg-white flex-[50%] text-sky-800 border-2 border-sky-700 p-3 justify-start" id="prevBtn" onclick="previousQuestion()">Sebelumnya</button>
-                    <button class="rounded-xl bg-sky-800 flex-[50%] p-3 flex-1 text-white" id="nextBtn justify-end" onclick="nextQuestion()">Selanjutnya</button>
+                    <div class="flex flex-row gap-4">
+                        <button class="rounded-xl bg-white flex-[50%] text-sky-800 border-2 border-sky-700 p-3 justify-start" id="prevBtn" onclick="previousQuestion()">Sebelumnya</button>
+                        <button class="rounded-xl bg-sky-800 flex-[50%] p-3 flex-1 text-white" id="nextBtn justify-end" onclick="nextQuestion()">Selanjutnya</button>
+                    </div>
                 </div>
-              </div>
-
+            </div>
             <!-- Results Section -->
             <div id="resultSection" class="result-section">
                 <h2 style="margin-bottom: 24px; color: #1e293b;">Hasil Skrining</h2>
@@ -423,8 +423,7 @@
                     <button class="btn btn-secondary" onclick="restartScreening()">Skrining Baru</button>
                     <button class="btn btn-primary" onclick="printResult()">Cetak Hasil</button>
                 </div>                
-            </div>
-            </div> 
+            </div>   
     </div>
 
     <script>
