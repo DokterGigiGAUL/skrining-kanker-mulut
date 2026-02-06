@@ -11,49 +11,17 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, Helvetica, Inter, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: #075985;
-            min-height: 100vh;
-            padding: 20px;
-        }
-
-        .question-section {
-            display: none;
-            animation: fadeIn 0.3s;
-        } 
-
-        .question-section.active {
-            display: block;
-        } 
-
+        * {margin: 0; padding: 0; box-sizing: border-box;}
+        body {font-family: -apple-system, BlinkMacSystemFont, Helvetica, Inter, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif; background: #075985; min-height: 100vh; padding: 20px;}
+        .question-section {display: none; animation: fadeIn 0.3s;}
+        .question-section.active {display: block;} 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
-
-        .question-group {
-            margin-bottom: 32px;
-        }
-
-        .question-title {
-            font-size: 18px;
-            font-weight: 600;
-            color: #1e293b;
-            margin-bottom: 16px;
-        }
-
-        .question-description {
-            font-size: 14px;
-            color: #64748b;
-            margin-bottom: 12px;
-        }
+        .question-group {margin-bottom: 32px;}
+        .question-title {font-size: 18px; font-weight: 600;color: #1e293b;margin-bottom: 16px;}
+        .question-description {font-size: 14px; color: #64748b; margin-bottom: 12px;}
 
         .radio-group, .checkbox-group {
             display: flex;
@@ -328,9 +296,9 @@
 <body>
     <div class="font-sans">
         <div class="max-w-lg mx-auto">
-            <!-- <div class="w-80 h-80 bg-white border-xl flex align-center justify-center mx-4 text-3xl"-->
-            <div class="rounded-t-2xl bg-white pt-4">
-                <img src="https://live.staticflickr.com/65535/55080957875_2e6dbc2931_b.jpg">
+            <!-- <div class="w-80 h-80 bg-white border-xl flex align-center justify-center mx-4 text-3xl"> -->
+            <div class="rounded-t-2xl bg-white">
+                <img src="https://live.staticflickr.com/65535/55080957875_2e6dbc2931_b.jpg" class="rounded-t-2xl">
             </div>
             
             <div class="rounded-b-2xl p-4 mb-4 bg-white">
