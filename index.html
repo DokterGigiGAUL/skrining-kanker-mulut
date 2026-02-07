@@ -722,6 +722,51 @@
             document.getElementById('userTypeSection').style.display = 'block';
         }
 
+        async function uploadPhotoToGoogleDrive(file) {
+            const statusDiv = document.getElementById('uploadStatus');
+            statusDiv.innerHTML = '<span style="color: #f59e0b;">⏳ Mengupload foto...</span>';
+            
+            try {
+                const base64 = await fileToBase64(file);
+                
+                const formData = new FormData();
+                formData.append('file', base64);
+                formData.append('filename', file.name);
+                formData.append('mimeType', file.type);
+                formData.append('timestamp', new Date().toISOString());
+                formData.append('age', state.answers.age || '');
+                formData.append('gender', state.answers.gender || '');
+                
+                const response = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    state.uploadedPhotoUrl = result.fileUrl;
+                    statusDiv.innerHTML = '<span style="color: #10b981;">✓ Foto berhasil diupload</span>';
+                    return true;
+                } else {
+                    throw new Error(result.error || 'Upload failed');
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                statusDiv.innerHTML = '<span style="color: #ef4444;">✗ Upload gagal. Lanjutkan tanpa foto.</span>';
+                return false;
+            }
+        }
+        
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+        
         function startQuestionnaire() {
             const age = document.getElementById('age').value;
             const gender = document.getElementById('gender').value;
@@ -733,7 +778,13 @@
             
             state.answers.age = parseInt(age);
             state.answers.gender = gender;
-            
+
+                    // Handle photo upload if file selected
+            const photoFile = document.getElementById('photoUpload').files[0];
+            if (photoFile) {
+                const uploaded = await uploadPhotoToGoogleDrive(photoFile);
+                // Continue even if upload fails
+            }
             // Age is a risk factor for oral cancer (>40 years)
             if (state.answers.age > 40) {
                 state.score += 2;
@@ -1117,12 +1168,7 @@ module.exports = {
   },
 }
 
-        // Handle photo upload if file selected
-            const photoFile = document.getElementById('photoUpload').files[0];
-            if (photoFile) {
-                const uploaded = await uploadPhotoToGoogleDrive(photoFile);
-                // Continue even if upload fails
-            }
+
     </script>
 </body>
 </html>
