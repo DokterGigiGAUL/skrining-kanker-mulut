@@ -308,8 +308,63 @@
                 <div class="bg-gray-200/80 rounded-lg border-4 border-black p-2 text-black mt-4 text-sm">
                   <em>Penting:</em> Aplikasi ini adalah <strong>alat skrining</strong> bukan untuk kepastian diagnosis. Hasil akhir ditentukan setelah berkonsultasi dengan dokter gigi spesialis penyakit mulut.
                 </div>
-       
-            <!-- User Type Selection -->
+
+                <!-- User Type Selection -->
+            <div id="userTypeSection">
+                <div class="alert alert-info">
+                    <strong>Penting:</strong> Aplikasi ini adalah alat skrining, bukan untuk diagnosis. Hasil harus dikonfirmasi oleh tenaga kesehatan profesional.
+                </div>
+                
+                <h2 style="margin-bottom: 16px; color: #1e293b;">Pilih Jenis Pengguna</h2>
+                <div class="user-type-selector">
+                    <div class="user-type-btn" onclick="selectUserType('public')">
+                        <div class="icon">👥</div>
+                        <div class="label">Masyarakat Umum</div>
+                    </div>
+                    <div class="user-type-btn" onclick="selectUserType('professional')">
+                        <div class="icon">⚕️</div>
+                        <div class="label">Dokter Gigi</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Demographic Information -->
+            <div id="demographicSection" class="question-section">
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 10%"></div>
+                </div>
+                
+                <h2 style="margin-bottom: 24px; color: #1e293b;">Informasi Dasar</h2>
+                
+                <div class="input-group">
+                    <label>Usia</label>
+                    <input type="number" id="age" min="1" max="120" placeholder="Masukkan usia">
+                </div>
+                
+                <div class="input-group">
+                    <label>Jenis Kelamin</label>
+                    <select id="gender">
+                        <option value="">Pilih jenis kelamin</option>
+                        <option value="male">Laki-laki</option>
+                        <option value="female">Perempuan</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label>Foto Lesi Mulut (Opsional)</label>
+                    <input type="file" id="photoUpload" accept="image/*" capture="environment">
+                    <p style="font-size: 13px; color: #64748b; margin-top: 8px;">
+                        Foto akan disimpan untuk dokumentasi. Tidak wajib diisi.
+                    </p>
+                    <div id="uploadStatus" style="margin-top: 8px; font-size: 14px;"></div>
+                </div>
+                
+                <div class="btn-group">
+                    <button class="btn btn-secondary" onclick="goToUserType()">Kembali</button>
+                    <button class="btn btn-primary" onclick="startQuestionnaire()">Mulai Skrining</button>
+                </div>
+            </div>
+            <!-- User Type Selection 
                 <div id="userTypeSection">
                     <h2 class="my-4 text-color-black pt-4 border-t border-gray-400/60";">Pilih Tipe Pengguna</h2>
                     <div class="space-y-3">
@@ -321,9 +376,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
 
-            <!-- Demographic Information -->
+            <!-- Demographic Information 
             <div id="demographicSection" class="question-section">
               <div class="rounded-3xl bg-white p-4">
                 <div class="w-100% h-3 bg-gray-200 rounded-full mb-6 overflow-hidden">
@@ -346,7 +401,6 @@
                     </select>
                 </div>
                   
-<!-- upload foto dokumentasi -->
                   <div class="input-group text-base">
                     <label>Foto Lesi Mulut (Opsional)</label>
                     <input type="file" id="photoUpload" accept="image/*" capture="environment">
@@ -361,7 +415,7 @@
                     <button class="rounded-xl bg-sky-800 p-3 flex-[60%] text-white" onclick="startQuestionnaire()">Mulai Evaluasi</button>
                 </div>
               </div>
-            </div>
+            </div>-->
 
             <!-- Questionnaire Section -->
             <div id="questionnaireSection" class="question-section">
@@ -710,8 +764,7 @@
         function selectUserType(type) {
             state.userType = type;
             document.querySelectorAll('.user-type-btn').forEach(btn => btn.classList.remove('active'));
-            // event.target.closest('.user-type-btn').classList.add('active'); 
-    document.querySelector(`.user-type-btn[onclick*="${type}"]`).classList.add('active');
+            event.target.closest('.user-type-btn').classList.add('active'); 
 
             setTimeout(() => {
                 document.getElementById('userTypeSection').style.display = 'none';
