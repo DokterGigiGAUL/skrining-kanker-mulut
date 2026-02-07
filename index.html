@@ -242,17 +242,17 @@
             display: none;
         }
 
-         .user-type-selector {
-            display: grid;
+         .user-type-selector {}
+  /*         display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 16px;
             margin-bottom: 32px;
-        }
+        } */
 
         .user-type-btn {
-            padding: 20px;
+            /* padding: 20px;
             border: 2px solid #e2e8f0;
-            border-radius: 12px;
+            border-radius: 12px; */
             background: white;
             cursor: pointer;
             transition: all 0.3s;
@@ -305,22 +305,23 @@
             <div class="rounded-b-2xl p-4 mb-4 bg-white">
                 <h1 class="text-center font-bold text-xl pb-1">OCRE- Oral Cancer Risk Evaluator</h1>
                 <p class="text-center text-base">Evaluasi dan Deteksi Dini Kanker Mulut</p>
-                <div class="bg-gray-200/80 rounded-lg border-4 border-black p-2 text-black mt-4 text-sm">
-                  <em>Penting:</em> Aplikasi ini adalah <strong>alat skrining</strong> bukan untuk kepastian diagnosis. Hasil akhir ditentukan setelah berkonsultasi dengan dokter gigi spesialis penyakit mulut.
-                </div>
+                  <div class="bg-gray-200/80 rounded-lg border-4 border-black p-2 text-black mt-4 text-sm">
+                    <em>Penting:</em> Aplikasi ini adalah <strong>alat skrining</strong> bukan untuk kepastian diagnosis. Hasil akhir ditentukan setelah berkonsultasi dengan dokter gigi spesialis penyakit mulut.
+                  </div>
 
-                <!-- User Type Selection -->
-                <div id="userTypeSection">
+                 <!-- User Type Selection -->
+                 <div id="userTypeSection">
                     <h2 class="my-4 text-color-black pt-4 border-t border-gray-400/60";">Pilih Tipe Pengguna</h2>
                     <div class="user-type-selector space-y-3">
-                        <div class="user-type-btn rounded-xl text-center p-3 bg-sky-800" onclick="selectUserType('public')">
-                            <div class="label" style="color:white;">👨‍💼 Masyarakat Umum</div>
-                        </div>
-                        <div class="user-type-btn text-sky-800 rounded-xl text-center p-3 border-2 border-sky-700" onclick="selectUserType('professional')">
-                            <div class="label">👩🏻‍⚕️ Dokter Gigi</div>
-                        </div>
+                      <div class="user-type-btn rounded-xl text-center p-3 bg-sky-800" onclick="selectUserType('public')">
+                         <div class="label" style="color:white;">👨‍💼 Masyarakat Umum</div>
+                      </div>           
+                      <div class="user-type-btn text-sky-800 rounded-xl text-center p-3 border-2 border-sky-700" onclick="selectUserType('professional')">
+                         <div class="label">👩🏻‍⚕️ Dokter Gigi</div>
+                      </div>                 
                     </div>
-                </div>
+                 </div>
+                
 
             <!-- Demographic Information -->
             <div id="demographicSection" class="question-section">
