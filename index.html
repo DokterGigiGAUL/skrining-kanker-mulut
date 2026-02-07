@@ -709,8 +709,9 @@
         function selectUserType(type) {
             state.userType = type;
             document.querySelectorAll('.user-type-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.closest('.user-type-btn').classList.add('active');
-            
+            // event.target.closest('.user-type-btn').classList.add('active'); 
+            window.event.target.closest('.user-type-btn').classList.add('active');
+
             setTimeout(() => {
                 document.getElementById('userTypeSection').style.display = 'none';
                 document.getElementById('demographicSection').classList.add('active');
