@@ -2,7 +2,7 @@
   "name": "OCRE - Oral Cancer Risk Evaluator",
   "short_name": "OCRE",
   "description": "Aplikasi skrining deteksi dini lesi pre-kanker dan kanker mulut berbasis faktor risiko",
-  "start_url": "/",
+  "start_url": "/ocre",
   "display": "standalone",
   "background_color": "#667eea",
   "theme_color": "#075985",
