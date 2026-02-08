@@ -17,7 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @theme { --font-sans: InterVariable, sans-serif; --font-sans--font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';}
+        @theme { --font-sans: InterVariable, sans-serif; --font-sans--font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11'}
         body{font-family:-apple-system,BlinkMacSystemFont,Helvetica,Inter,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;background:#075985;min-height:100vh;padding:20px}
         .question-section{display:none;animation:.3s fadeIn} 
         .question-section.active{display:block}
@@ -44,13 +44,13 @@
         .hidden,.result-section{display:none}
         .result-section.active{display:block;animation:.5s fadeIn}
         .risk-indicator{padding:24px;border-radius:12px;text-align:center}
-        .risk-indicator.low{background:#d1fae5;border:2px solid #10b981}
-        .risk-indicator.moderate{background:#fef3c7;border:2px solid #f59e0b}
-        .risk-indicator.high{background:#fee2e2;border:2px solid #ef4444}
+        .risk-indicator.low{background:#15803d;border:2px solid #15803d}
+        .risk-indicator.moderate{background:#b45309;border:2px solid #b45309}
+        .risk-indicator.high{background:#b91c1c;border:2px solid #b91c1c}
         .risk-level{font-size:24px;font-weight:700;margin-bottom:8px}
-        .risk-indicator.low .risk-level{color:#059669}
-        .risk-indicator.moderate .risk-level{color:#d97706}
-        .risk-indicator.high .risk-level{color:#dc2626}
+        .risk-indicator.low .risk-level{color:#ffffff}
+        .risk-indicator.moderate .risk-level{color:#ffffff}
+        .risk-indicator.high .risk-level{color:#ffffff}
         .recommendation{background:#f8fafc;padding:20px;border-radius:12px;margin-bottom:20px;border-left:4px solid #667eea}
         .recommendation h3{color:#1e293b;margin-bottom:12px;font-size:18px}
         .recommendation ul{margin-left:20px}
@@ -64,7 +64,7 @@
         .score-item{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #e2e8f0}
         .score-item:last-child{border-bottom:none}
         .user-type-btn{cursor:pointer;transition:.3s;text-align:center}
-        .user-type-btn .label{font-weight:500;}
+        .user-type-btn .label{font-weight:500}
         @media (max-width:640px){.user-type-selector{grid-template-columns:1fr}
         .card{padding:24px}h1{font-size:24px}}
         </style>
@@ -82,7 +82,7 @@
                 <h1 class="text-center font-bold text-xl pb-1">OCRE- Oral Cancer Risk Evaluator</h1>
                 <p class="text-center text-base">Evaluasi dan Deteksi Dini Kanker Mulut</p>
                   <div class="text-black mt-4 text-sm">
-                    <em>Penting:</em> Aplikasi ini adalah <strong>alat skrining</strong> dan <strong><span class="text-rose-600">BUKAN</span></strong> untuk <strong>kepastian diagnosis</strong>. Hasil akhir ditentukan setelah berkonsultasi dengan <strong>dokter gigi spesialis penyakit mulut</strong>.
+                    <em>DISCLAIMER:</em> Aplikasi ini adalah <strong>alat skrining</strong> dan <strong><span class="text-rose-600">BUKAN</span></strong> untuk <strong>kepastian diagnosis</strong>. Hasil akhir ditentukan setelah berkonsultasi dengan <strong>dokter gigi spesialis penyakit mulut</strong>.
                   </div>
             
 
@@ -164,7 +164,7 @@
                 
                     <div id="riskIndicator" class="risk-indicator">
                         <div class="risk-level"></div>
-                        <div class="risk-description"></div>
+                        <div class="hidden risk-description"></div>
                     </div>
                 
                     <div class="score-breakdown">
@@ -618,7 +618,7 @@
             state.currentQuestion = questionIndex;
             const question = currentQuestions[questionIndex];
             
-            const progress = ((questionIndex + 1) / currentQuestions.length) * 90 + 10;
+            const progress = ((questionIndex + 1) / currentQuestions.length) * 100 + 0;
             document.getElementById('questionProgress').style.width = progress + '%';
             
             let html = `
@@ -1025,11 +1025,11 @@
             // Risk box
             let riskColor;
             if (riskIndicator.classList.contains('low')) {
-                riskColor = [16, 185, 129];
+                riskColor = [21, 128, 61];
             } else if (riskIndicator.classList.contains('moderate')) {
-                riskColor = [245, 158, 11];
+                riskColor = [180, 83, 9];
             } else {
-                riskColor = [239, 68, 68];
+                riskColor = [185, 28, 28];
             }
             
             doc.setFillColor(...riskColor);
