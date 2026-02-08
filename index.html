@@ -85,7 +85,7 @@
                 <h1 class="text-center font-bold text-xl pb-1">OCRE- Oral Cancer Risk Evaluator</h1>
                 <p class="text-center text-base">Evaluasi dan Deteksi Dini Kanker Mulut</p>
                   <div class="text-black mt-4 text-sm">
-                    <em>Penting:</em> Aplikasi ini adalah <strong>alat skrining</strong> dan <strong>BUKAN</strong> untuk <strong>kepastian diagnosis</strong>. Hasil akhir ditentukan setelah berkonsultasi dengan <strong>dokter gigi spesialis penyakit mulut</strong>.
+                    <em>Penting:</em> Aplikasi ini adalah <strong>alat skrining</strong> dan <strong><span class="text-rose-600">BUKAN</span></strong> untuk <strong>kepastian diagnosis</strong>. Hasil akhir ditentukan setelah berkonsultasi dengan <strong>dokter gigi spesialis penyakit mulut</strong>.
                   </div>
             
 
@@ -270,24 +270,12 @@
                     ]
                 },
                 {
-                    id: 'lesion_location',
-                    title: 'Lokasi sariawan/ luka di dalam rongga mulut',
-                    type: 'radio',
-                    condition: (answers) => answers.oral_lesion < 2,
-                    options: [
-                        { value: 0, label: 'Dasar mulut', weight: 5 },
-                        { value: 1, label: 'Lidah lateral/ventral', weight: 4 },
-                        { value: 2, label: 'Palatum/ orofaring', weight: 4},
-                        { value: 3, label: 'Mukosa bukal/ labial', weight: 2},
-                        { value: 4, label: 'Gingiva', weight: 1 }
-                    ]
-                },
-                {
                     id: 'white_red_patch',
                     title: 'Apakah ada bercak putih atau merah di mulut Anda?',
                     description: 'Leukoplakia (putih) atau eritroplakia (merah) bisa menjadi tanda pre-kanker',
                     type: 'radio',
-                    condition: (answers) => answers.lesion_location > 4 || answers.oral_lesion === 2,
+                    condition: (answers) => answers.oral_lesion === 2,
+                    answers.oral_lesion === 2,
                     options: [
                         { value: 0, label: 'Ada bercak putih dan merah', weight: 10 },
                         { value: 1, label: 'Ada bercak merah', weight: 8 },
@@ -307,6 +295,19 @@
                         { value: 3, label: 'Tidak ada', weight: 0 }
                     ]
                 },
+                 {
+                    id: 'lesion_location',
+                    title: 'Lokasi sariawan/ bercak/ bengkak di dalam rongga mulut',
+                    type: 'radio',
+                    condition: (answers) => answers.oral_lesion < 2 || (answers.white_red_patch !== undefined && answers.white_red_patch < 3) || (answers.swelling !== undefined && answers.swelling < 3),
+                    options: [
+                        { value: 0, label: 'Dasar mulut', weight: 5 },
+                        { value: 1, label: 'Lidah lateral/ventral', weight: 4 },
+                        { value: 2, label: 'Palatum/ orofaring', weight: 4},
+                        { value: 3, label: 'Mukosa bukal/ labial', weight: 2},
+                        { value: 4, label: 'Gusi atau lokasi lain', weight: 1 }
+                    ]
+                }, 
                 {
                     id: 'pain',
                     title: 'Apakah Anda merasakan nyeri persisten di mulut atau tenggorokan?',
