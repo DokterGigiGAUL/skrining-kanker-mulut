@@ -104,9 +104,9 @@
 
             <!-- Demographic Information -->
             <div id="demographicSection" class="question-section">
-              <div class="rounded-3xl bg-white p-4">
-                    <div class="w-100% h-3 bg-gray-200 rounded-full mb-6 overflow-hidden">
-                      <div class="h-full transition-width duration-0.3s bg-sky-800" id="demographicProgress" style="width: 15%"></div>
+              <div class="rounded-3xl bg-white pt-6">
+                    <div class="hidden w-100% h-3 bg-gray-200 rounded-full mb-6 overflow-hidden">
+                      <div class="h-full transition-width duration-0.3s bg-sky-800" id="demographicProgress" style="width: 0%"></div>
                     </div>
                 <h2 style="margin-bottom: 24px;" class="font-bold text-xl">Informasi Dasar</h2>
                 <div class="input-group">
@@ -145,7 +145,7 @@
                 <div class="rounded-3xl bg-white p-4">
                     <h2 style="margin-bottom: 24px;" class="font-bold text-xl">Kuesioner</h2>
                     <div class="w-100% h-3 bg-gray-200 rounded-full mb-6 overflow-hidden">
-                        <div class="h-full transition-width duration-0.3s bg-sky-800" id="questionProgress" style="width: 30%"></div>
+                        <div class="h-full transition-width duration-0.3s bg-sky-800" id="questionProgress" style="width: 10%"></div>
                     </div>
                 
                     <div id="questionContainer"></div>
@@ -618,7 +618,7 @@
             state.currentQuestion = questionIndex;
             const question = currentQuestions[questionIndex];
             
-            const progress = ((questionIndex + 1) / currentQuestions.length) * 70 + 30;
+            const progress = ((questionIndex + 1) / currentQuestions.length) * 90 + 10;
             document.getElementById('questionProgress').style.width = progress + '%';
             
             let html = `
@@ -1066,7 +1066,7 @@
             doc.text('REKOMENDASI', margin, y);
             y += lineHeight;
             
-            doc.setFontSize(10);
+            doc.setFontSize(12);
             doc.setFont(undefined, 'normal');
             
             const recommendationsDiv = document.getElementById('recommendations');
@@ -1075,12 +1075,6 @@
             recommendationsList.forEach(item => {
                 const text = item.textContent;
                 const splitText = doc.splitTextToSize(text, maxWidth - 10);
-                
-                // Check if we need a new page
-                if (y + splitText.length * lineHeight > doc.internal.pageSize.getHeight() - 30) {
-                    doc.addPage();
-                    y = 20;
-                }
                 
                 doc.text('• ' + splitText[0], margin + 5, y);
                 for (let i = 1; i < splitText.length; i++) {
@@ -1092,12 +1086,6 @@
             
             y += lineHeight;
             
-            // Disclaimer
-            if (y + 30 > doc.internal.pageSize.getHeight() - 30) {
-                doc.addPage();
-                y = 20;
-            }
-            
             doc.setFillColor(254, 243, 199);
             doc.rect(margin, y, maxWidth, 25, 'F');
             
@@ -1106,7 +1094,7 @@
             doc.text('DISCLAIMER:', margin + 3, y + 5);
             
             doc.setFont(undefined, 'normal');
-            const disclaimer = 'Hasil skrining ini bukan diagnosis medis. Konsultasikan dengan dokter gigi atau spesialis untuk pemeriksaan lebih lanjut dan diagnosis yang akurat.';
+            const disclaimer = 'Hasil skrining ini bukan diagnosis medis. Konsultasikan dengan dokter gigi spesialis penyakit mulut untuk pemeriksaan lebih lanjut dan diagnosis yang akurat.';
             const splitDisclaimer = doc.splitTextToSize(disclaimer, maxWidth - 6);
             doc.text(splitDisclaimer, margin + 3, y + 11);
             
@@ -1121,7 +1109,16 @@
             const filename = `Hasil-Skrining-Kanker-Mulut-${state.answers.age}th-${new Date().toISOString().split('T')[0]}.pdf`;
             doc.save(filename);
         }
-
+        
+        function calculateContentHeight() {
+            // Estimasi tinggi berdasarkan jumlah rekomendasi
+            const baseHeight = 150; // header + info dasar
+            const recommendationCount = document.querySelectorAll('#recommendations li').length;
+            const recommendationHeight = recommendationCount * 10;
+                
+            return baseHeight + recommendationHeight + 50; // +50 untuk margin
+        }
+        
         // Install PWA support
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -1186,14 +1183,7 @@
             installButton.style.display = 'none';
             deferredPrompt = null;
         });
-function calculateContentHeight() {
-    // Estimasi tinggi berdasarkan jumlah rekomendasi
-    const baseHeight = 150; // header + info dasar
-    const recommendationCount = document.querySelectorAll('#recommendations li').length;
-    const recommendationHeight = recommendationCount * 10;
-    
-    return baseHeight + recommendationHeight + 50; // +50 untuk margin
-}
+
     </script>
 </body>
 </html>
