@@ -582,7 +582,7 @@
             
             // Age is a risk factor for oral cancer (>40 years)
             if (state.answers.age > 40) {
-                state.score += 2;
+                state.score += 1;
             }
             if (state.answers.age > 60) {
                 state.score += 2;
@@ -767,11 +767,11 @@
             let riskLevel, riskClass, riskDescription;
             
             if (state.userType === 'public') {
-                if (state.score < 10) {
+                if (state.score < 15) {
                     riskLevel = 'Risiko Rendah';
                     riskClass = 'low';
                     riskDescription = 'Anda memiliki risiko rendah untuk lesi pre-kanker atau kanker mulut';
-                } else if (state.score < 25) {
+                } else if (state.score < 35) {
                     riskLevel = 'Risiko Sedang';
                     riskClass = 'moderate';
                     riskDescription = 'Anda memiliki beberapa faktor risiko yang perlu mendapat perhatian';
