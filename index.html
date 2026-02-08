@@ -17,10 +17,7 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @theme {
-  --font-sans: InterVariable, sans-serif;
-  --font-sans--font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-}
+        @theme { --font-sans: InterVariable, sans-serif; --font-sans--font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';}
         body{font-family:-apple-system,BlinkMacSystemFont,Helvetica,Inter,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;background:#075985;min-height:100vh;padding:20px}
         .question-section{display:none;animation:.3s fadeIn} 
         .question-section.active{display:block}
@@ -275,7 +272,6 @@
                     description: 'Leukoplakia (putih) atau eritroplakia (merah) bisa menjadi tanda pre-kanker',
                     type: 'radio',
                     condition: (answers) => answers.oral_lesion === 2,
-                    answers.oral_lesion === 2,
                     options: [
                         { value: 0, label: 'Ada bercak putih dan merah', weight: 10 },
                         { value: 1, label: 'Ada bercak merah', weight: 8 },
