@@ -1,8 +1,9 @@
 const CACHE_NAME = 'oral-cancer-screening-v1.0.0';
 const urlsToCache = [
   '/',
-  '/oral-cancer-screening.html',
-  '/manifest.json'
+  '/index.html',
+  '/manifest.json',
+  '/offline.html'  // <-- pastikan ini ada
 ];
 
 // Install event - cache static assets
