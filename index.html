@@ -79,7 +79,7 @@
                 <img src="Logo-gigital-2.png" class="absolute top-4 left-4 h-12 w-auto">
             </div>
             
-            <div class="rounded-b-2xl p-4 mb-4 bg-white">
+            <div class="rounded-b-2xl p-4 bg-white">
                 <h1 class="text-center font-bold text-xl pb-1">OCRE®- Oral Cancer Risk Evaluator</h1>
                 <p class="text-center text-base">Evaluasi dan Deteksi Dini Kanker Mulut</p>
                   <div class="text-black mt-4 text-sm">
@@ -145,7 +145,7 @@
 
             <!-- Questionnaire Section -->
             <div id="questionnaireSection" class="question-section">
-                <div class="rounded-3xl bg-white p-4">
+                <div class="rounded-3xl bg-white mt-4 p-4">
                     <h2 style="margin-bottom: 24px;" class="font-bold text-xl">Kuesioner</h2>
                     <div class="w-100% h-3 bg-gray-200 rounded-full mb-6 overflow-hidden">
                         <div class="h-full transition-width duration-0.3s bg-sky-800" id="questionProgress" style="width: 10%"></div>
@@ -392,9 +392,9 @@
                     options: [
                         { value: 0, label: 'Dasar mulut', weight: 5 },
                         { value: 1, label: 'Lidah lateral/ventral', weight: 4 },
-                        { value: 2, label: 'Palatum/ orofaring', weight: 4 },
+                        { value: 2, label: 'Palatum durum', weight: 4 },
                         { value: 3, label: 'Mukosa bukal/ labial', weight: 2 },
-                        { value: 4, label: 'Gingiva', weight: 1 }
+                        { value: 4, label: 'Lainnya (guingiva, tonsil)', weight: 1 }
                     ]
                 },
                 {
@@ -435,11 +435,11 @@
                     title: 'Gejala penyerta',
                     type: 'checkbox',
                     options: [
-                        { value: 'pain', label: 'Nyeri persisten', weight: 3 },
-                        { value: 'dysphagia', label: 'Disfagia', weight: 5 },
-                        { value: 'numbness', label: 'Parestesia/kebas', weight: 4 },
+                        { value: 'pain', label: 'Nyeri (persisten)', weight: 3 },
+                        { value: 'dysphagia', label: 'Nyeri menelan', weight: 5 },
+                        { value: 'numbness', label: 'Parestesia/ kebas', weight: 4 },
                         { value: 'bleeding', label: 'Perdarahan spontan', weight: 5 },
-                        { value: 'loose_teeth', label: 'Gigi goyang tanpa sebab', weight: 4 },
+                        { value: 'loose_teeth', label: 'Mobilitas gigi tanpa sebab', weight: 4 },
                         { value: 'none', label: 'Tidak ada', weight: 4 }
                     ]
                 },
@@ -461,10 +461,11 @@
                     title: 'Konsumsi alkohol pasien',
                     type: 'radio',
                     options: [
-                        { value: 0, label: 'Berat (>3 gelas/hari)', weight: 5 },
-                        { value: 1, label: 'Sedang (2-3 gelas/hari)', weight: 3 },
-                        { value: 2, label: 'Ringan (<2 gelas/hari)', weight: 1 },
-                        { value: 3, label: 'Tidak ada', weight: 0 }
+                        { value: 0, label: 'Berat (setiap hari)', weight: 5 },
+                        { value: 1, label: 'Sedang (1-2x per minggu)', weight: 3 },
+                        { value: 2, label: 'Ringan (1-2x per bulan)', weight: 2 },
+                        { value: 3, label: 'Eventual (1-2x per tahun)', weight: 1 },
+                        { value: 4, label: 'Tidak ada', weight: 0 }
                     ]
                 },
                 {
@@ -491,8 +492,8 @@
                     title: 'Riwayat kanker sebelumnya',
                     type: 'radio',
                     options: [
-                        { value: 0, label: 'Kanker mulut/kepala-leher sebelumnya', weight: 4 },
-                        { value: 1, label: 'Kanker jenis lain', weight: 2 },
+                        { value: 0, label: 'Kanker mulut/kepala-leher', weight: 4 },
+                        { value: 1, label: 'Kanker lain (mis: payudara)', weight: 2 },
                         { value: 2, label: 'Tidak ada', weight: 0 }
                     ]
                 }
